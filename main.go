@@ -7,7 +7,7 @@ import (
 	"os/exec"
 	"strings"
 
-	ru "github.com/tp/rutinas"
+	ru "github.com/tp/rutina"
 )
 
 // Función principal
@@ -32,7 +32,7 @@ func main() {
 		case 0:
 			fmt.Println("=====================================")
 			fmt.Println("¡Hasta luego!")
-			despedida()
+
 			fmt.Println("=====================================")
 			return
 		case 1:
@@ -119,12 +119,6 @@ func clear() {
 	cmd := exec.Command("cmd", "/c", "cls")
 	cmd.Stdout = os.Stdout
 	cmd.Run()
-}
-
-func despedida() {
-	fmt.Println("============================================================================================================================")
-	fmt.Println("===============================================[( ͡°( ͡° ͜ʖ( ͡° ͜ʖ ͡°)ʖ ͡°) ͡°)]====================================================")
-	fmt.Println("============================================================================================================================")
 }
 
 func readLine() string {

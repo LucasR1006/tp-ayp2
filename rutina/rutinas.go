@@ -85,7 +85,7 @@ func crearRutina(ejercicios []*ej.Ejercicio) *Rutina {
 	}
 
 	for _, ejercicio := range ejercicios {
-		nuevaRutina.Duracion += ejercicio.TiempoEstimado
+		//nuevaRutina.Duracion += ejercicio.TiempoEstimado
 		nuevaRutina.Calorias += ejercicio.Calorias
 	}
 
@@ -126,7 +126,7 @@ func MostrarRutina(rutina *Rutina) {
 	for _, ejercicio := range rutina.Ejercicios {
 		fmt.Println("Nombre:", ejercicio.Nombre)
 		fmt.Println("Descripción:", ejercicio.Descripcion)
-		fmt.Println("Tiempo Estimado:", ejercicio.TiempoEstimado, "segundos")
+		//fmt.Println("Tiempo Estimado:", ejercicio.TiempoEstimado, "segundos")
 		fmt.Println("Calorías:", ejercicio.Calorias)
 		fmt.Println("Dificultad:", ejercicio.Dificultad)
 		fmt.Println()
