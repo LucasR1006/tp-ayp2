@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	ej "github.com/tp-ayp2/ejercicio"
+	ej "github.com/tp/ejercicio"
 )
 
 var Rutinas []*Rutina
