@@ -19,8 +19,9 @@ func main() {
 		fmt.Println("         MENÚ DE GESTIÓN DE EJERCICIOS Y RUTINAS        ")
 		fmt.Println("=========================================================")
 		fmt.Println("     1. Generar rutina predefinida")
-		fmt.Println("     2. Generar rutina dinamica")
-		fmt.Println("     3. Opciones de rutinas")
+		fmt.Println("     2. Generar rutina espartana")
+		fmt.Println("     3. Generar rutina dinamica")
+		fmt.Println("     4. Opciones de rutinas")
 		fmt.Println("     0. Salir")
 		fmt.Println("=========================================================")
 		fmt.Print("Ingrese una opción: ")
@@ -46,13 +47,22 @@ func main() {
 			break
 		case 2:
 			fmt.Println("=====================================")
+			fmt.Println("Generando rutina predefinida...")
+			rutinaPredefinida := ru.CrearRutinaPredefinida()
+			fmt.Println(" ")
+			fmt.Println("Rutina creada:")
+			ru.MostrarRutina(rutinaPredefinida)
+			fmt.Println("=====================================")
+			break
+		case 3:
+			fmt.Println("=====================================")
 			fmt.Println("Generando rutina dinámica...")
 			rutinaDinamica := ru.CrearRutinaDinamica()
 			fmt.Println("Rutina creada:")
 			ru.MostrarRutina(rutinaDinamica)
 			fmt.Println("=====================================")
 			break
-		case 3:
+		case 4:
 			otrasOpciones()
 			break
 		default:

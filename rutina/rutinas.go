@@ -57,6 +57,18 @@ func CrearRutinaPredefinida() *Rutina {
 	return rutina
 }
 
+func CrearRutinaEspartana() *Rutina {
+	var nombre string
+	fmt.Println("Nombre de la rutina predefinida: ")
+	fmt.Scanln(&nombre)
+
+	ejerciciosPredefinidos := ej.EntrenamientoEspartano()
+	rutina := crearRutina(ejerciciosPredefinidos)
+	Rutinas = append(Rutinas, rutina)
+	rutina.Nombre = nombre
+	return rutina
+}
+
 func CrearRutinaDinamica() *Rutina {
 	fmt.Println("Ingrese el nombre de la rutina Dinamica: ")
 	var nombre string

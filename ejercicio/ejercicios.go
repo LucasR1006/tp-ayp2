@@ -87,18 +87,17 @@ func Añadir(eje *Ejercicio) {
 	lista = append(lista, eje)
 }
 
-/*
-	func EliminarEjercico(nombre string) {
-		for i, eje := range Listado() {
-			if eje.Nombre == nombre {
-				lista = append(lista[:i], lista[i+1:]...)
-				fmt.Println("ejercio eliminad exitosamente.")
-				return
-			}
+func EliminarEjercico(nombre string) {
+	for i, eje := range Listado() {
+		if eje.Nombre == nombre {
+			lista = append(lista[:i], lista[i+1:]...)
+			fmt.Println("ejercio eliminad exitosamente.")
+			return
 		}
-		fmt.Println("No se encontró ninguna rutina con el nombre especificado.")
 	}
-*/
+	fmt.Println("No se encontró ninguna rutina con el nombre especificado.")
+}
+
 func readLine() string {
 	reader := bufio.NewReader(os.Stdin)
 	line, _ := reader.ReadString('\n')
