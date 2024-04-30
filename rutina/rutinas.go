@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	ej "github.com/tp-ayp2/ejercicio"
+	ej "github.com/tp/ejercicio"
 )
 
 var Rutinas []*Rutina
@@ -51,6 +51,18 @@ func CrearRutinaPredefinida() *Rutina {
 	fmt.Scanln(&nombre)
 
 	ejerciciosPredefinidos := ej.ListaPredefinida()
+	rutina := crearRutina(ejerciciosPredefinidos)
+	Rutinas = append(Rutinas, rutina)
+	rutina.Nombre = nombre
+	return rutina
+}
+
+func CrearRutinaEspartana() *Rutina {
+	var nombre string
+	fmt.Println("Nombre de la rutina predefinida: ")
+	fmt.Scanln(&nombre)
+
+	ejerciciosPredefinidos := ej.EntrenamientoEspartano()
 	rutina := crearRutina(ejerciciosPredefinidos)
 	Rutinas = append(Rutinas, rutina)
 	rutina.Nombre = nombre
