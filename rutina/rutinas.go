@@ -1,10 +1,7 @@
 package rutina
 
 import (
-	"bufio"
 	"fmt"
-	"os"
-	"strings"
 
 	ej "github.com/tp/ejercicio"
 )
@@ -47,7 +44,7 @@ func ConsultarRutina(nombre string) *Rutina {
 // Función para crear una rutina predefinida y agregarla al slice de rutinas
 func CrearRutinaPredefinida() *Rutina {
 	var nombre string
-	fmt.Println("Nombre de la rutina predefinida: ")
+	fmt.Println("Nombre de la rutina: ")
 	fmt.Scanln(&nombre)
 
 	ejerciciosPredefinidos := ej.ListaPredefinida()
@@ -97,7 +94,7 @@ func crearRutina(ejercicios []*ej.Ejercicio) *Rutina {
 	}
 
 	for _, ejercicio := range ejercicios {
-		nuevaRutina.Duracion += ejercicio.TiempoEstimado
+		nuevaRutina.Duracion += ejercicio.Tiempo
 		nuevaRutina.Calorias += ejercicio.Calorias
 	}
 
@@ -138,15 +135,9 @@ func MostrarRutina(rutina *Rutina) {
 	for _, ejercicio := range rutina.Ejercicios {
 		fmt.Println("Nombre:", ejercicio.Nombre)
 		fmt.Println("Descripción:", ejercicio.Descripcion)
-		fmt.Println("Tiempo Estimado:", ejercicio.TiempoEstimado, "segundos")
+		fmt.Println("Tiempo Estimado:", ejercicio.Tiempo, "segundos")
 		fmt.Println("Calorías:", ejercicio.Calorias)
 		fmt.Println("Dificultad:", ejercicio.Dificultad)
 		fmt.Println()
 	}
-}
-
-func readLine() string {
-	reader := bufio.NewReader(os.Stdin)
-	line, _ := reader.ReadString('\n')
-	return strings.TrimSpace(line)
 }

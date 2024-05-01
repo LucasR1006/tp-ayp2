@@ -1,11 +1,9 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"os"
 	"os/exec"
-	"strings"
 
 	ru "github.com/tp/rutina"
 )
@@ -16,15 +14,15 @@ func main() {
 	clear()
 	for {
 		fmt.Println("=========================================================")
-		fmt.Println("         MENÚ DE GESTIÓN DE EJERCICIOS Y RUTINAS        ")
+		fmt.Println("         MENÚ DE EJERCICIOS Y RUTINAS                    ")
 		fmt.Println("=========================================================")
-		fmt.Println("     1. Generar rutina predefinida")
+		fmt.Println("     1. Generar rutina basica")
 		fmt.Println("     2. Generar rutina espartana")
 		fmt.Println("     3. Generar rutina dinamica")
 		fmt.Println("     4. Opciones de rutinas")
 		fmt.Println("     0. Salir")
 		fmt.Println("=========================================================")
-		fmt.Print("Ingrese una opción: ")
+		fmt.Print("Ingrese su opción: ")
 
 		var option int
 		fmt.Scanln(&option)
@@ -32,8 +30,7 @@ func main() {
 		switch option {
 		case 0:
 			fmt.Println("=====================================")
-			fmt.Println("¡Hasta luego!")
-			despedida()
+			fmt.Println("¡Nos vemos luego!")
 			fmt.Println("=====================================")
 			return
 		case 1:
@@ -48,7 +45,7 @@ func main() {
 		case 2:
 			fmt.Println("=====================================")
 			fmt.Println("Generando rutina predefinida...")
-			rutinaPredefinida := ru.CrearRutinaPredefinida()
+			rutinaPredefinida := ru.CrearRutinaEspartana()
 			fmt.Println(" ")
 			fmt.Println("Rutina creada:")
 			ru.MostrarRutina(rutinaPredefinida)
@@ -129,16 +126,4 @@ func clear() {
 	cmd := exec.Command("cmd", "/c", "cls")
 	cmd.Stdout = os.Stdout
 	cmd.Run()
-}
-
-func despedida() {
-	fmt.Println("============================================================================================================================")
-	fmt.Println("===============================================[( ͡°( ͡° ͜ʖ( ͡° ͜ʖ ͡°)ʖ ͡°) ͡°)]====================================================")
-	fmt.Println("============================================================================================================================")
-}
-
-func readLine() string {
-	reader := bufio.NewReader(os.Stdin)
-	line, _ := reader.ReadString('\n')
-	return strings.TrimSpace(line)
 }
