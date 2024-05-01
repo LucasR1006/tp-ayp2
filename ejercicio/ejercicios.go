@@ -87,11 +87,11 @@ func Añadir(eje *Ejercicio) {
 	lista = append(lista, eje)
 }
 
-func EliminarEjercico(nombre string) {
+func EliminarEjercicio(nombre string) {
 	for i, eje := range Listado() {
 		if eje.Nombre == nombre {
 			lista = append(lista[:i], lista[i+1:]...)
-			fmt.Println("ejercio eliminad exitosamente.")
+			fmt.Println("Ejercio eliminado.")
 			return
 		}
 	}

@@ -26,9 +26,9 @@ func TestObtenerEjercicio(t *testing.T) {
 	assert.Equal(t, "sentadillas", c[0].Nombre)
 }
 
-func TestEliminarEjercico(t *testing.T) {
+func TestEliminarEjercicio(t *testing.T) {
 	c := Listado()
 	assert.Equal(t, 5, len(c))
-	EliminarEjercico("flexiones")
+	EliminarEjercicio("flexiones")
 	assert.Equal(t, 4, len(c))
 }
