@@ -103,3 +103,8 @@ func readLine() string {
 	line, _ := reader.ReadString('\n')
 	return strings.TrimSpace(line)
 }
+
+func Listado() []*Ejercicio {
+	lista = ListaPredefinida()
+	return lista
+}
