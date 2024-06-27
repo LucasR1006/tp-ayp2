@@ -20,7 +20,7 @@ type Ejercicio struct {
 	Descripcion string
 	Tipo        *dictionary.Dictionary[string, int]
 	Dificultad  string
-	Tiempo      int // en segundos
+	Tiempo      int // en minutos
 	Calorias    int
 	Puntos      int
 }
@@ -33,7 +33,7 @@ func CrearEjercicio() *Ejercicio {
 	nombre := readLine()
 	fmt.Print("Algun detalle para recordarlo?:")
 	descipcion := readLine()
-	fmt.Print("Cuanto tiempo le vas a poner? (En segundos):")
+	fmt.Print("Cuanto tiempo le vas a poner? (En minutos):")
 	var tiempo int
 	fmt.Scanln(&tiempo)
 	fmt.Print("Gasto estimado en calorias?:")
@@ -50,7 +50,7 @@ func CrearEjercicio() *Ejercicio {
 		Descripcion: descipcion,
 		Tiempo:      tiempo,
 		Calorias:    calorias,
-		//Tipo:        Tipo,
+		//Tipo:        tipo,
 		Dificultad: dificultad,
 	}
 }
@@ -68,7 +68,7 @@ func NuevoEjercicio(nombre, descripcion string, dificultad string, tipo string, 
 	}
 }
 
-func ListaPredefinida() []*Ejercicio {
+func ListaPredefinida() (*Lista, []*Ejercicio) {
 	s := NuevoEjercicio("sentadillas", "flexión de rodillas hasta formar un ángulo de 90 grados",
 		"medio", "flexibilidad y fuerza", 40, 100, 30)
 	f := NuevoEjercicio("flexiones", "levantando el cuerpo únicamente con los brazos y bajando de nuevo al suelo",
@@ -76,14 +76,16 @@ func ListaPredefinida() []*Ejercicio {
 	j := NuevoEjercicio("jumping jack", "saltar mientras abres y cierras piernas y brazos",
 		"dificil", "cardio", 30, 560, 60)
 	z := NuevoEjercicio("zancadas alternas", "dar una zancada atrás y bajar la rodilla hasta que la pierna quede recta",
-		"medio", "flexibilidad", 12, 500, 20)
+		"facil", "flexibilidad", 12, 500, 20)
 	p := NuevoEjercicio("levantamiento de pesas", "agarrar pesas y subirlas y bajarlas con los brazos",
 		"medio", "fuerza", 30, 200, 20)
 	rutina := []*Ejercicio{s, f, j, z, p}
-	return rutina
+	list := &Lista{dictionary.NewDictionary[string, *Ejercicio]()}
+	list.Añadir(s, f, j, z, p)
+	return list, rutina
 }
 
-func EntrenamientoEspartano() []*Ejercicio {
+func EntrenamientoDificil() []*Ejercicio {
 	f := NuevoEjercicio("flexiones", "100 flexiones", "dificil", "fuerza", 1000, 500, 100)
 	a := NuevoEjercicio("abdominales", "100 abs", "dificil", "fuerza", 1000, 500, 100)
 	s := NuevoEjercicio("sentadillas", "100 sentadillas", "dificil", "flexibilidad y fuerza", 150, 300, 100)
@@ -113,8 +115,8 @@ func (l *Lista) EliminarEjercicio(nombre string) {
 func MostrarEjercicio(ejercicio *Ejercicio) {
 	fmt.Println("Nombre del ejercicio:", ejercicio.Nombre)
 	fmt.Println("Descripcion del ejercicio:", ejercicio.Descripcion)
-	fmt.Println("Tipo:", ejercicio.Tipo)
-	fmt.Println("Duración Total:", ejercicio.Tiempo, "segundos")
+	//fmt.Println("Tipo:", ejercicio.Tipo)
+	fmt.Println("Duración Total:", ejercicio.Tiempo, "minutos")
 	fmt.Println("Calorías Quemadas:", ejercicio.Calorias)
 	fmt.Println("Dificultad:", ejercicio.Dificultad)
 }
@@ -136,7 +138,7 @@ func (l *Lista) EscribirEjCSV() {
 
 	for _, eje := range l.lista.Values() {
 		toString = []string{}
-		toString = append(toString, eje.Nombre, eje.Descripcion, fmt.Sprint(eje.Tipo.Keys()), eje.Dificultad, fmt.Sprint(eje.Tiempo), fmt.Sprint(eje.Calorias), fmt.Sprint(eje.Tipo.Values()))
+		toString = append(toString, eje.Nombre, eje.Descripcion /*fmt.Sprint(eje.Tipo.Keys()),*/, eje.Dificultad, fmt.Sprint(eje.Tiempo), fmt.Sprint(eje.Calorias)) //, fmt.Sprint(eje.Tipo.Values()))
 		writer.Write(toString)
 	}
 	writer.Flush()

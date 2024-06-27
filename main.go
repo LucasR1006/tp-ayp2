@@ -9,18 +9,23 @@ import (
 
 	ej "github.com/tp/ejercicio"
 	ru "github.com/tp/rutina"
+	"github.com/untref-ayp2/data-structures/dictionary"
 )
 
 // Función principal
 func main() {
 
 	clear()
+
+	listaActual, eje := ej.ListaPredefinida()
+	listaActual.EscribirEjCSV()
+
 	for {
 		fmt.Println("=========================================================")
 		fmt.Println("         MENÚ DE EJERCICIOS Y RUTINAS                    ")
 		fmt.Println("=========================================================")
 		fmt.Println("     1. Generar rutina basica")
-		fmt.Println("     2. Generar rutina espartana")
+		fmt.Println("     2. Generar rutina dificil")
 		fmt.Println("     3. Generar rutina dinamica")
 		fmt.Println("     4. Opciones de rutinas")
 		fmt.Println("     5. Opciones de ejercicios")
@@ -33,41 +38,40 @@ func main() {
 
 		switch option {
 		case 0:
+			os.Create("ejercicios.csv")
+			os.Create("rutinas.csv")
 			fmt.Println("=====================================")
 			fmt.Println("¡Hasta luego!")
 			fmt.Println("=====================================")
 			return
 		case 1:
 			fmt.Println("=====================================")
-			fmt.Println("Generando rutina predefinida...")
-			rutinaPredefinida := ru.CrearRutinaPredefinida()
+			fmt.Println("Generando rutina basica...")
+			rutinaPredefinida := ru.CrearRutinaBasica()
 			fmt.Println(" ")
 			fmt.Println("Rutina creada:")
 			ru.MostrarRutina(rutinaPredefinida)
+			ru.EscribirRuCSV(eje, rutinaPredefinida)
 			fmt.Println("=====================================")
 			break
 		case 2:
 			fmt.Println("=====================================")
-			fmt.Println("Generando rutina predefinida...")
-			rutinaPredefinida := ru.CrearRutinaEspartana()
+			fmt.Println("Generando rutina Dificil...")
+			rutinaPredefinida := ru.CrearRutinaDificil()
 			fmt.Println(" ")
 			fmt.Println("Rutina creada:")
 			ru.MostrarRutina(rutinaPredefinida)
+			ru.EscribirRuCSV(eje, rutinaPredefinida)
 			fmt.Println("=====================================")
 			break
 		case 3:
-			fmt.Println("=====================================")
-			fmt.Println("Generando rutina dinámica...")
-			rutinaDinamica := ru.CrearRutinaDinamica()
-			fmt.Println("Rutina creada:")
-			ru.MostrarRutina(rutinaDinamica)
-			fmt.Println("=====================================")
+			OpcionesDinamicas(listaActual.Listado())
 			break
 		case 4:
 			opcionesRutinas()
 			break
 		case 5:
-			opcionesEjercicios()
+			opcionesEjercicios(listaActual)
 			break
 		default:
 			fmt.Println("Opción inválida.")
@@ -126,14 +130,15 @@ func opcionesRutinas() {
 	}
 }
 
-func opcionesEjercicios() {
+func opcionesEjercicios(lista *ej.Lista) {
 	for {
 		fmt.Println("=========================================================")
 		fmt.Println("         OPCIONES DE EJERCICIOS        ")
 		fmt.Println("=========================================================")
 		fmt.Println("     1. Eliminar ejercicio")
 		fmt.Println("     2. Consultar ejercicio")
-		fmt.Println("     3. Mostrar todas los ejercicio")
+		fmt.Println("     3. Mostrar todos los ejercicios")
+		fmt.Println("     4. Añadir ejercicio")
 		fmt.Println("     0. Volver atras")
 		fmt.Println("=========================================================")
 		fmt.Print("Ingrese una opción: ")
@@ -149,7 +154,9 @@ func opcionesEjercicios() {
 			fmt.Print("Ingrese el nombre del ejercicio que desea eliminar: ")
 			var nombre string
 			fmt.Scanln(&nombre)
-			ej.EliminarEjercicio(nombre)
+			lista.EliminarEjercicio(nombre)
+			os.Create("ejercicios.csv")
+			lista.EscribirEjCSV()
 			fmt.Println("==================================================")
 			break
 		case 2:
@@ -157,19 +164,103 @@ func opcionesEjercicios() {
 			fmt.Print("Ingrese el nombre del ejercicio que desea consultar: ")
 			var nombre string
 			fmt.Scanln(&nombre)
-			ejercicio := ej.ConsultarEjercicio(nombre)
-			if ejercicio != nil {
-				ej.MostrarEjercicio(ejercicio)
-			}
+			fmt.Println("En el archivo ejercicios.csv puede buscar la informacion de " + nombre)
 			fmt.Println("==================================================")
 			break
 		case 3:
 			fmt.Println("==================================================")
 			fmt.Println("Listado de todos los ejercicios:")
-			for _, ejercicios := range lista {
-				fmt.Println("-", ejercicios.Nombre)
-			}
+			fmt.Println("-", lista.Listado())
 			fmt.Println("==================================================")
+			break
+		case 4:
+			fmt.Println("==================================================")
+			eje := ej.CrearEjercicio()
+			lista.Añadir(eje)
+			lista.EscribirEjCSV()
+			fmt.Println("==================================================")
+			break
+		default:
+			fmt.Println("Opción inválida.")
+		}
+	}
+}
+
+func OpcionesDinamicas(lista *dictionary.Dictionary[string, *ej.Ejercicio]) {
+	for {
+		fmt.Println("=========================================================")
+		fmt.Println("         OPCIONES DE RUTINAS DINAMICAS        ")
+		fmt.Println("=========================================================")
+		fmt.Println("     1. Crear Rutina Maxima Cantidad")
+		fmt.Println("     2. crear Rutina Minima Duracion")
+		fmt.Println("     3. Crear Rutina Maximo Puntaje")
+		fmt.Println("     4. Crear Rutina Manual")
+		fmt.Println("     0. Volver atras")
+		fmt.Println("=========================================================")
+		fmt.Print("Ingrese una opción: ")
+
+		var option int
+		fmt.Scanln(&option)
+
+		switch option {
+		case 0:
+			return
+		case 1:
+			fmt.Println("==================================================")
+			fmt.Print("Ingrese el nombre de la rutina: ")
+			var nombre string
+			fmt.Scanln(&nombre)
+			fmt.Print("Ingrese la dificultad que se busca en los ejercicios: ")
+			var dificultad string
+			fmt.Scanln(&dificultad)
+			fmt.Print("Ingrese la duracion en minutos de la rutina: ")
+			var duracion int
+			fmt.Scanln(&duracion)
+			fmt.Print("Ingrese el tipo de ejercicios: ")
+			var tipo string
+			fmt.Scanln(&tipo)
+			rutinaMaxCantidad := ru.CrearRutinaMaximaCantidad(nombre, dificultad, duracion, lista, tipo)
+			ru.EscribirRuCSV(rutinaMaxCantidad.Ejercicios, rutinaMaxCantidad)
+			ru.MostrarRutina(rutinaMaxCantidad)
+			fmt.Println("==================================================")
+			break
+		case 2:
+			fmt.Println("==================================================")
+			fmt.Print("Ingrese el nombre de la rutina: ")
+			var nombre string
+			fmt.Scanln(&nombre)
+			fmt.Print("Ingrese las calorias a quemar en la rutina: ")
+			var calorias int
+			fmt.Scanln(&calorias)
+			rutinaMinDuracion := ru.CrearRutinaMinimaDuracion(nombre, calorias, lista)
+			ru.MostrarRutina(rutinaMinDuracion)
+			ru.EscribirRuCSV(rutinaMinDuracion.Ejercicios, rutinaMinDuracion)
+			fmt.Println("==================================================")
+			break
+		case 3:
+			fmt.Println("==================================================")
+			fmt.Print("Ingrese el nombre de la rutina: ")
+			var nombre string
+			fmt.Scanln(&nombre)
+			fmt.Print("Ingrese la duracion de la rutina: ")
+			var duracion int
+			fmt.Scanln(&duracion)
+			fmt.Print("Ingrese el tipo de ejercicios: ")
+			var tipo string
+			fmt.Scanln(&tipo)
+			rutinaMaxPuntaje := ru.CrearRutinaMaximoPuntaje(nombre, duracion, tipo, lista)
+			ru.EscribirRuCSV(rutinaMaxPuntaje.Ejercicios, rutinaMaxPuntaje)
+			ru.MostrarRutina(rutinaMaxPuntaje)
+			fmt.Println("==================================================")
+			break
+		case 4:
+			fmt.Println("=====================================")
+			fmt.Println("Generando rutina manual...")
+			rutinaManual := ru.CrearRutinaManual()
+			fmt.Println("Rutina creada:")
+			ru.EscribirRuCSV(rutinaManual.Ejercicios, rutinaManual)
+			ru.MostrarRutina(rutinaManual)
+			fmt.Println("=====================================")
 			break
 		default:
 			fmt.Println("Opción inválida.")
