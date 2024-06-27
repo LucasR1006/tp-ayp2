@@ -40,6 +40,7 @@ func CrearEjercicio() *Ejercicio {
 	var calorias int
 	fmt.Scanln(&calorias)
 	//fmt.Print("Que tipo de ejercicio es?(cardio, fuerza o flexibilidad):")
+
 	var tipo *dictionary.Dictionary[string, int]
 	fmt.Scanln(&tipo)
 	fmt.Print("Dificultad? (Facil, Medio, Dificil):")

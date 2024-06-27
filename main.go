@@ -39,6 +39,8 @@ func main() {
 
 		switch option {
 		case 0:
+			os.Create("ejercicios.csv")
+			os.Create("rutinas.csv")
 			fmt.Println("=====================================")
 			fmt.Println("¡Hasta luego!")
 			fmt.Println("=====================================")
