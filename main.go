@@ -29,6 +29,7 @@ func main() {
 		fmt.Println("     3. Generar rutina dinamica")
 		fmt.Println("     4. Opciones de rutinas")
 		fmt.Println("     5. Opciones de ejercicios")
+		fmt.Println("     6. Borrar archivos .csv")
 		fmt.Println("     0. Salir")
 		fmt.Println("=========================================================")
 		fmt.Print("Ingrese su opción: ")
@@ -38,8 +39,6 @@ func main() {
 
 		switch option {
 		case 0:
-			os.Create("ejercicios.csv")
-			os.Create("rutinas.csv")
 			fmt.Println("=====================================")
 			fmt.Println("¡Hasta luego!")
 			fmt.Println("=====================================")
@@ -65,7 +64,7 @@ func main() {
 			fmt.Println("=====================================")
 			break
 		case 3:
-			OpcionesDinamicas(listaActual.Listado())
+			OpcionesAutoMagicas(listaActual.Listado())
 			break
 		case 4:
 			opcionesRutinas()
@@ -73,6 +72,10 @@ func main() {
 		case 5:
 			opcionesEjercicios(listaActual)
 			break
+		case 6:
+			os.Create("ejercicios.csv")
+			os.Create("rutinas.csv")
+			fmt.Println("Archivos eliminados correctamente")
 		default:
 			fmt.Println("Opción inválida.")
 		}
@@ -186,10 +189,10 @@ func opcionesEjercicios(lista *ej.Lista) {
 	}
 }
 
-func OpcionesDinamicas(lista *dictionary.Dictionary[string, *ej.Ejercicio]) {
+func OpcionesAutoMagicas(lista *dictionary.Dictionary[string, *ej.Ejercicio]) {
 	for {
 		fmt.Println("=========================================================")
-		fmt.Println("         OPCIONES DE RUTINAS DINAMICAS        ")
+		fmt.Println("         OPCIONES DE RUTINAS AUTOMAGICAS        ")
 		fmt.Println("=========================================================")
 		fmt.Println("     1. Crear Rutina Maxima Cantidad")
 		fmt.Println("     2. crear Rutina Minima Duracion")

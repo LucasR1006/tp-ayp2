@@ -141,7 +141,7 @@ func MostrarRutina(rutina *Rutina) {
 		fmt.Println("Tiempo Estimado:", ejercicio.Tiempo, "minutos")
 		fmt.Println("Calorías:", ejercicio.Calorias)
 		fmt.Println("Dificultad:", ejercicio.Dificultad)
-		//fmt.Println("Tipo:", ejercicio.Tipo)
+		fmt.Println("Tipo:", ejercicio.Tipo)
 		fmt.Println()
 	}
 }
