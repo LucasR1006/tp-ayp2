@@ -7,6 +7,7 @@ import (
 	"os/exec"
 	"strings"
 
+	ej "github.com/tp/ejercicio"
 	ru "github.com/tp/rutina"
 )
 
@@ -22,6 +23,7 @@ func main() {
 		fmt.Println("     2. Generar rutina espartana")
 		fmt.Println("     3. Generar rutina dinamica")
 		fmt.Println("     4. Opciones de rutinas")
+		fmt.Println("     5. Opciones de ejercicios")
 		fmt.Println("     0. Salir")
 		fmt.Println("=========================================================")
 		fmt.Print("Ingrese su opción: ")
@@ -62,7 +64,10 @@ func main() {
 			fmt.Println("=====================================")
 			break
 		case 4:
-			otrasOpciones()
+			opcionesRutinas()
+			break
+		case 5:
+			opcionesEjercicios()
 			break
 		default:
 			fmt.Println("Opción inválida.")
@@ -70,7 +75,7 @@ func main() {
 	}
 }
 
-func otrasOpciones() {
+func opcionesRutinas() {
 	for {
 		fmt.Println("=========================================================")
 		fmt.Println("         OPCIONES DE RUTINAS        ")
@@ -112,6 +117,57 @@ func otrasOpciones() {
 			fmt.Println("Listado de todas las rutinas:")
 			for _, rutina := range ru.Rutinas {
 				fmt.Println("-", rutina.Nombre)
+			}
+			fmt.Println("==================================================")
+			break
+		default:
+			fmt.Println("Opción inválida.")
+		}
+	}
+}
+
+func opcionesEjercicios() {
+	for {
+		fmt.Println("=========================================================")
+		fmt.Println("         OPCIONES DE EJERCICIOS        ")
+		fmt.Println("=========================================================")
+		fmt.Println("     1. Eliminar ejercicio")
+		fmt.Println("     2. Consultar ejercicio")
+		fmt.Println("     3. Mostrar todas los ejercicio")
+		fmt.Println("     0. Volver atras")
+		fmt.Println("=========================================================")
+		fmt.Print("Ingrese una opción: ")
+
+		var option int
+		fmt.Scanln(&option)
+
+		switch option {
+		case 0:
+			return
+		case 1:
+			fmt.Println("==================================================")
+			fmt.Print("Ingrese el nombre del ejercicio que desea eliminar: ")
+			var nombre string
+			fmt.Scanln(&nombre)
+			ej.EliminarEjercicio(nombre)
+			fmt.Println("==================================================")
+			break
+		case 2:
+			fmt.Println("==================================================")
+			fmt.Print("Ingrese el nombre del ejercicio que desea consultar: ")
+			var nombre string
+			fmt.Scanln(&nombre)
+			ejercicio := ej.ConsultarEjercicio(nombre)
+			if ejercicio != nil {
+				ej.MostrarEjercicio(ejercicio)
+			}
+			fmt.Println("==================================================")
+			break
+		case 3:
+			fmt.Println("==================================================")
+			fmt.Println("Listado de todos los ejercicios:")
+			for _, ejercicios := range lista {
+				fmt.Println("-", ejercicios.Nombre)
 			}
 			fmt.Println("==================================================")
 			break

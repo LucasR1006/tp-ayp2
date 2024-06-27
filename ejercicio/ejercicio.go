@@ -2,18 +2,23 @@ package ejercicio
 
 import (
 	"bufio"
+	"encoding/csv"
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/untref-ayp2/data-structures/dictionary"
 )
 
-var lista []*Ejercicio
+type Lista struct {
+	lista *dictionary.Dictionary[string, *Ejercicio]
+}
 
 // Definición de la estructura de Ejercicio
 type Ejercicio struct {
 	Nombre      string
 	Descripcion string
-	Tipo        []string
+	Tipo        *dictionary.Dictionary[string, int]
 	Dificultad  string
 	Tiempo      int // en segundos
 	Calorias    int
@@ -34,8 +39,9 @@ func CrearEjercicio() *Ejercicio {
 	fmt.Print("Gasto estimado en calorias?:")
 	var calorias int
 	fmt.Scanln(&calorias)
-	fmt.Print("Que tipo de ejercicio es?(cardio, fuerza o flexibilidad):")
-	tipo := readLine()
+	//fmt.Print("Que tipo de ejercicio es?(cardio, fuerza o flexibilidad):")
+
+	//tipo := readLine()
 	fmt.Print("Dificultad? (Facil, Medio, Dificil):")
 	dificultad := readLine()
 
@@ -44,19 +50,19 @@ func CrearEjercicio() *Ejercicio {
 		Descripcion: descipcion,
 		Tiempo:      tiempo,
 		Calorias:    calorias,
-		Tipo:        []string{tipo},
-		Dificultad:  dificultad,
+		//Tipo:        Tipo,
+		Dificultad: dificultad,
 	}
 }
 
 func NuevoEjercicio(nombre, descripcion string, dificultad string, tipo string, tiempo, calorias int, puntos int) *Ejercicio {
-
+	Tipo := dictionary.NewDictionary[string, int]()
 	return &Ejercicio{
 		Nombre:      nombre,
 		Descripcion: descripcion,
 		Tiempo:      tiempo,
 		Calorias:    calorias,
-		Tipo:        []string{tipo},
+		Tipo:        Tipo,
 		Puntos:      puntos,
 		Dificultad:  dificultad,
 	}
@@ -87,19 +93,30 @@ func EntrenamientoEspartano() []*Ejercicio {
 	return rutina
 }
 
-func Añadir(eje *Ejercicio) {
-	lista = append(lista, eje)
+func (l *Lista) Añadir(eje ...*Ejercicio) {
+	for _, eje := range eje {
+		l.lista.Put(eje.Nombre, eje)
+	}
 }
 
-func EliminarEjercicio(nombre string) {
-	for i, eje := range Listado() {
+func (l *Lista) EliminarEjercicio(nombre string) {
+	for _, eje := range l.lista.Values() {
 		if eje.Nombre == nombre {
-			lista = append(lista[:i], lista[i+1:]...)
+			l.lista.Remove(nombre)
 			fmt.Println("Ejercio eliminado.")
 			return
 		}
 	}
-	fmt.Println("No se encontró ninguna rutina con el nombre especificado.")
+	fmt.Println("No se encontró ningun ejercicio con el nombre especificado.")
+}
+
+func MostrarEjercicio(ejercicio *Ejercicio) {
+	fmt.Println("Nombre del ejercicio:", ejercicio.Nombre)
+	fmt.Println("Descripcion del ejercicio:", ejercicio.Descripcion)
+	fmt.Println("Tipo:", ejercicio.Tipo)
+	fmt.Println("Duración Total:", ejercicio.Tiempo, "segundos")
+	fmt.Println("Calorías Quemadas:", ejercicio.Calorias)
+	fmt.Println("Dificultad:", ejercicio.Dificultad)
 }
 
 func readLine() string {
@@ -108,7 +125,19 @@ func readLine() string {
 	return strings.TrimSpace(line)
 }
 
-func Listado() []*Ejercicio {
-	lista = ListaPredefinida()
-	return lista
+func (l *Lista) Listado() *dictionary.Dictionary[string, *Ejercicio] {
+	return l.lista
+}
+func (l *Lista) EscribirEjCSV() {
+
+	file, _ := os.Create("ejercicios.csv")
+	writer := csv.NewWriter(file)
+	var toString []string
+
+	for _, eje := range l.lista.Values() {
+		toString = []string{}
+		toString = append(toString, eje.Nombre, eje.Descripcion, fmt.Sprint(eje.Tipo.Keys()), eje.Dificultad, fmt.Sprint(eje.Tiempo), fmt.Sprint(eje.Calorias), fmt.Sprint(eje.Tipo.Values()))
+		writer.Write(toString)
+	}
+	writer.Flush()
 }

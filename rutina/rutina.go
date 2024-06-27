@@ -4,17 +4,17 @@ import (
 	"fmt"
 
 	ej "github.com/tp/ejercicio"
+	"github.com/untref-ayp2/data-structures/dictionary"
 )
 
 var Rutinas []*Rutina
 
-// Definición de la estructura de Rutina
 type Rutina struct {
 	Nombre     string
 	Ejercicios []*ej.Ejercicio
 	Duracion   int // en minutos
 	Calorias   int
-	Tipo       map[string]int
+	Tipo       *dictionary.Dictionary[string, int]
 	Dificultad string
 }
 
@@ -23,11 +23,11 @@ func EliminarRutina(nombre string) {
 	for i, rutina := range Rutinas {
 		if rutina.Nombre == nombre {
 			Rutinas = append(Rutinas[:i], Rutinas[i+1:]...)
-			fmt.Println("Rutina eliminada exitosamente.")
+			fmt.Println("Rutina eliminada correctamente.")
 			return
 		}
 	}
-	fmt.Println("No se encontró ninguna rutina con el nombre especificado.")
+	fmt.Println("No se encontró ninguna rutina con ese nombre.")
 }
 
 // Función para consultar una rutina del slice de rutinas
